@@ -30,7 +30,7 @@ def compare_datasets(files):
     for file in files:
         dataset = xr.load_dataset(file)
         try:
-            print(f"Dataset {file} was computed on {dataset.attrs["creation_of_dataset"]} with Capytaine {dataset.attrs["capytaine_version"]}")
+            print(f'Dataset {file} was computed on {dataset.attrs["creation_of_dataset"]} with Capytaine {dataset.attrs["capytaine_version"]}')
         except KeyError:
             pass
         dataset.attrs["filename"] = os.path.basename(file)

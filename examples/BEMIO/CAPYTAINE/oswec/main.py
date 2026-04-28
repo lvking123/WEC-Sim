@@ -4,7 +4,7 @@ import xarray as xr
 import capytaine as cpt
 from capytaine.io.legacy import export_hydrostatics
 
-input_data_dir = os.path.dirname(__file__)
+input_data_dir = os.path.dirname('main.py')
 output_dir = os.path.join(input_data_dir, 'outputs')
 os.makedirs(output_dir, exist_ok=True)
 
@@ -33,7 +33,7 @@ base_shift_body.inertia_matrix = base_shift_body.compute_rigid_body_inertia()
 base_shift_body.hydrostatic_stiffness = base_shift_body.immersed_part().compute_hydrostatic_stiffness()
 
 oswec_body = flap_body + base_shift_body
-# oswec_body.show()  # Uncomment to display the mesh in 3D for verification
+oswec_body.show()  # Uncomment to display the mesh in 3D for verification
 
 test_matrix = xr.Dataset(coords={
     "omega": np.linspace(0.04, 20.0, 500),
@@ -44,7 +44,7 @@ test_matrix = xr.Dataset(coords={
     })
 
 solver = cpt.BEMSolver()
-dataset = solver.fill_dataset(test_matrix, oswec_body.immersed_part(), n_jobs=2)
+dataset = solver.fill_dataset(test_matrix, oswec_body.immersed_part(), n_jobs=1)
 
 cpt.export_dataset(os.path.join(output_dir, 'oswec_hydrodynamics.nc'), dataset)
 export_hydrostatics(output_dir, [flap_body, base_shift_body])

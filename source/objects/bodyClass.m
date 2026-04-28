@@ -217,6 +217,7 @@ classdef bodyClass<handle
                             error('The hdf5 file %s does not exist',obj.h5File{iH})
                         end
                         h5Info = dir(obj.h5File{iH});
+                        disp(h5Info)
                         h5Info.bytes;
                         if h5Info.bytes < 1000
                             error('This is not the correct *.h5 file. Please install git-lfs to access the correct *.h5 file, or run \hydroData\bemio.m to generate a new *.h5 file');
